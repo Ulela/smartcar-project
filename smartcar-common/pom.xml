@@ -2,26 +2,79 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <!--关联父工程-->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.smart.car.root</groupId>
+        <artifactId>smartcar-project</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <groupId>com.smart.car.common</groupId>
     <artifactId>smartcar-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>smartcar-common</name>
-    <description>smartcar-common</description>
+    <description>公共微服务</description>
+
     <properties>
         <java.version>1.8</java.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <mybatis.version>2.1.4</mybatis.version>
+        <mysql.version>8.0.20</mysql.version>
+        <lombok.version>1.18.8</lombok.version>
+        <commons.version>4.4</commons.version>
+        <fastjson.version>1.2.62</fastjson.version>
+        <knife4j.version>2.0.8</knife4j.version>
+        <validation.version>2.3.5.RELEASE</validation.version>
+        <hutool.version>5.6.3</hutool.version>
     </properties>
     <dependencies>
+        <!--hutool工具类-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+        <!--校验类-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>${validation.version}</version>
         </dependency>
-
+        <!--Knife4j文档类-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>${knife4j.version}</version>
+        </dependency>
+        <!--lombok工具类-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--mysql依赖-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+            <version>${mysql.version}</version>
+        </dependency>
+        <!--mybatis依赖-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <!--json处理类-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!--单元测试类-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

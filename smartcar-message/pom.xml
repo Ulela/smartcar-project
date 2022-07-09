@@ -2,39 +2,42 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!--关联父工程-->
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.smart.car.root</groupId>
+        <artifactId>smartcar-project</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
+
     <groupId>com.smart.car.message</groupId>
     <artifactId>smartcar-message</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>smartcar-message</name>
-    <description>smartcar-message</description>
+    <description>消息微服务</description>
+
     <properties>
         <java.version>1.8</java.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
     <dependencies>
+        <!--1.引入工具微服务，自动具备mybatis、mysql等依赖-->
         <dependency>
-            <groupId>com.smart.car.root</groupId>
-            <artifactId>smartcar-project</artifactId>
+            <groupId>com.smart.car.common</groupId>
+            <artifactId>smartcar-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
-        <!--引入web依赖-->
+        <!--引入srpingboot-web依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -48,7 +51,22 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!--2.代码生成插件-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <!-- mybatis的代码生成器的配置文件 -->
+                    <configurationFile>src/test/resources/mybatis-generator-config.xml</configurationFile>
+                    <verbose>true</verbose>
+                    <overwrite>true</overwrite>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+
 
 </project>
