@@ -30,4 +30,9 @@ public class MemberUserServiceImpl implements MemberUserService {
         criteria.andPhoneEqualTo(phone);
         return memberUserMapper.selectByExample(userExample);
     }
+
+    @Override
+    public MemberUser queryById(String id) {
+        return memberUserMapper.selectByPrimaryKey(id);
+    }
 }

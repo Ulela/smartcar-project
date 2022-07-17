@@ -1,10 +1,10 @@
 server:
-  port: 8004
+  port: 8007
 author:
   nickname: "chenf"
 #mybatis配置
 mybatis:
-  type-aliases-package: com.smart.car.message.entity
+  type-aliases-package: com.smart.car.resource.entity
   mapper-locations: classpath:mapper/*.xml
   #输出sql
   configuration:
@@ -12,13 +12,13 @@ mybatis:
 spring:
   #1.微服务的名称
   application:
-    name: smartcar-message
+    name: smartcar-resource
   main:
     allow-bean-definition-overriding: true
   #db连接
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/car_message?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+    url: jdbc:mysql://localhost:3306/car_resource?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
     username: root
     password: ke8ke18zai2
   #2.nacos注册中心地址
@@ -33,5 +33,5 @@ logging:
   level:
     root: info
   file:
-    name: ./tmp/message.log
+    name: ./tmp/points.log
 

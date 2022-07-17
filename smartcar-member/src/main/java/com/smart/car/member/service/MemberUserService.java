@@ -13,4 +13,6 @@ public interface MemberUserService {
     List<MemberUser> list();
 
     List<MemberUser> queryUser(String phone);
+
+    MemberUser queryById(String id);
 }

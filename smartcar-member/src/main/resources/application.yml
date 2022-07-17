@@ -1,4 +1,3 @@
-
 server:
   port: 8003
 author:
@@ -22,3 +21,48 @@ spring:
     url: jdbc:mysql://localhost:3306/car_member?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
     username: root
     password: ke8ke18zai2
+#2.nacos注册中心地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    # 使用sentinel流量控制
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8080
+        port: 8719 #如被占用会自动+1
+      eager: true  #取消延迟加载
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: ${spring.application.name}
+            groupId: DEFAULT_GROUP
+            namespace: smartcar-member
+            data-type: json
+            rule-type: flow
+
+# 释放所有请求接口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+#logback配置
+logging:
+  level:
+    root: info
+  file:
+    name: ./tmp/member.log
+
+# feign和ribbon结合，指定策略为Ribbon的随机策略
+smartcar-points:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.smart.car.member.rule.NacosWeightedRule
+
+#1.降级方案一，采用hystrix
+feign:
+  hystrix:
+    enabled: false
+  sentinel:
+      enabled: true
