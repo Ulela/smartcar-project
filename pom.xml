@@ -19,6 +19,7 @@
         <module>smartcar-points</module>
         <module>smartcar-record</module>
         <module>smartcar-resource</module>
+        <module>smartcar-gateway</module>
     </modules>
 
     <!-- 主版本管理  -->
