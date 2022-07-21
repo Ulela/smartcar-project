@@ -1,0 +1,100 @@
+server:
+  port: 8008
+  servlet:
+    context-path: /gateway
+#logback配置
+logging:
+  level:
+    root: info
+    #关闭nacos心跳日志
+    com.alibaba.nacos.client.*: WARN
+    #org.springframework:cloud.gateway: debug
+  file:
+    name: ./tmp/gateway.log
+
+spring:
+  application:
+    name: samrtcar-geteway
+  cloud:
+    #nacos config
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        register-enabled: true
+    sentinel:
+      scg:
+        fallback:
+          mode: response
+          response-body: '{"code":403,"msg":"不好意思，请稍后再试（您被限流了）"}'
+      transport:
+        dashboard: 127.0.0.1:8080
+        port: 8720 #如被占用会自动+1
+      eager: true  #取消延迟加载
+      datasource:
+        ds:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            data-id: smartcar-gateway-gateway-flow
+            group-id: DEFAULT_GROUP
+            namespace: smartcar-gateway
+            data-type: json
+            rule-type: flow
+    #gateway config
+    gateway:
+      #跨域
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedHeaders: "*"
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTION
+      #开启网关映射
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true  #将请求路径上的服务名配置为小写
+          filters:                  #去掉path的前缀，视自身URL而定
+            - StripPrefix=1
+      #配置路由数组
+      routes:
+        #member子服务
+        - id: member-service      #自定义唯一名称-限流时用到
+          uri: lb://smartcar-member  # 映射提供服务的uri
+          predicates:
+            - Path= /member/**   #断言，映射路径
+          filters:
+            #结合Hystrix对服务宕机做fallback机制（降级过滤器）
+            #结合Hystrix对服务宕机做fallback机制（降级过滤器）
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/error/fallback
+            #重试次数（重试过滤器）（若两者都配置了，位置不可变）
+#            - name: Retry
+#              args:
+#                #重试3次，加上初次访问，正确执行应当是4次访问
+#                retries: 3
+#                statuses:
+#                  - OK
+#                methods:
+#                  - GET
+#                  - POST
+        #points子服务
+        - id: points-service      #自定义唯一名称-限流时用到
+          uri: lb://smartcar-points  # 映射提供服务的uri
+          predicates:
+            - Path= /points/**   #断言，映射路径
+
+#hystrix超时时间，默认时间为1000ms
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
