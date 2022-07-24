@@ -1,13 +1,13 @@
 package com.smart.car.points.controller;
 
 import com.smart.car.common.res.bean.ResponseResult;
+import com.smart.car.points.entity.PointsExchange;
 import com.smart.car.points.entity.PointsInfo;
+import com.smart.car.points.service.PointsExchangeService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author chenf
@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("points")
+@AllArgsConstructor
 public class PointsInfoController {
 
-    //SPEL表达式
-    @Value("${server.port}")
-    private String port;
+    private final PointsExchangeService pointsExchangeService;
 
     /**
      * TODO 远程调用实例
@@ -33,6 +32,12 @@ public class PointsInfoController {
         userPoint.setMemberId(id);
         userPoint.setCurQty("100");
         userPoint.setCreateBy("江湖一点雨");
-        return ResponseResult.ok(userPoint,"远程调用结果,来自于："+port);
+        return ResponseResult.ok(userPoint,"远程调用结果,来自于：");
+    }
+
+    @PostMapping("/create")
+    public ResponseResult create(String json) {
+        pointsExchangeService.createExchange(json);
+        return ResponseResult.ok();
     }
 }

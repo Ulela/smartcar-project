@@ -10,6 +10,20 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 spring:
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password:
+    #连接超时时间（毫秒）
+    timeout: 1000
+    #采用lettuce客户端
+    lettuce:
+      pool:
+        max-active: 10
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
   #1.微服务的名称
   application:
     name: smartcar-record

@@ -10,6 +10,7 @@ import java.util.List;
  * @date 2022-07-09
  */
 public interface MessageInfoService {
+    int sendNotice(String json);
     List<MessageInfo> list();
 }
 

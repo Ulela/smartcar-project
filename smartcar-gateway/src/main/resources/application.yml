@@ -89,7 +89,11 @@ spring:
           uri: lb://smartcar-points  # 映射提供服务的uri
           predicates:
             - Path= /points/**   #断言，映射路径
-
+              #record子服务
+        - id: record-service
+          uri: lb://smartcar-record
+          predicates:
+            - Path= /chargingRule/**
 #hystrix超时时间，默认时间为1000ms
 hystrix:
   command:

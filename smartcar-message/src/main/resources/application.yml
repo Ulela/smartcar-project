@@ -1,37 +1,49 @@
 server:
   port: 8004
-author:
-  nickname: "chenf"
-#mybatis配置
+
 mybatis:
   type-aliases-package: com.smart.car.message.entity
   mapper-locations: classpath:mapper/*.xml
-  #输出sql
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-spring:
-  #1.微服务的名称
-  application:
-    name: smartcar-message
-  main:
-    allow-bean-definition-overriding: true
-  #db连接
-  datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/car_message?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
-    username: root
-    password: ke8ke18zai2
-  #2.nacos注册中心地址
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-
 
 #logback配置
 logging:
   level:
     root: info
+    #关闭nacos心跳日志
+    com.alibaba.nacos.client.*: WARN
   file:
     name: ./tmp/message.log
 
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/car_message?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: ke8ke18zai2
+  #1.微服务的名称
+  application:
+    name: smartcar-message
+  #2.nacos注册中心地址
+  cloud:
+    #nacos配置
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+#4.actuator开放所有endpoint，配合spring-boot-admin使用，实际生产根据自身需要开放
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+#配置Feign超时时间
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000  #毫秒
+        readTimeout: 10000

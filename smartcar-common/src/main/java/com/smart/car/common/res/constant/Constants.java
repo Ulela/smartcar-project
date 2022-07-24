@@ -103,4 +103,21 @@ public class Constants {
      */
     public static final Integer IS_MEMBERVIP = 0;
     public static final Integer NOT_MEMBERVIP = 1;
+
+    /**
+     * 初始化缓存信息
+     * 计费规则cache
+     */
+    public static final class cache {
+        public static final String CHARGINGRULE = "ruleKey";        //收费规则key
+        public static final String currentAviableStallAmt = "currentAviableStallAmtKey"; //可用券key
+        public static final String grouponCodeAmtKey = "grouponCodeAmt";    //兑换码key
+        public static final int grouponCodeAmt = 10;
+    }
+    /**
+     * 积分兑换券锁名
+     */
+    public static final class lock {
+        public static final String exchangeCouponLock = "exchangeCouponLock";
+    }
 }
