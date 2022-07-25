@@ -10,6 +10,21 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 spring:
+  #stream配置
+  stream:
+    bindings:
+      output:
+        destination: park-pay-topic  #指定topic
+        content-type: application/json
+    rocketmq:
+      binder:
+        name-server: 127.0.0.1:9876 #rocketmq地址
+        enable-msg-trace: true
+      bindings:
+        output: #自定义通道名
+          producer:
+            group: park-pay-group-user-ouput #生产者组名
+            sync: true    # 是否同步发送消息，默认为 false 异步
   redis:
     database: 1
     host: 127.0.0.1

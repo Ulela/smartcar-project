@@ -15,6 +15,24 @@ logging:
     name: ./tmp/message.log
 
 spring:
+  #stream配置
+  stream:
+    bindings:
+      input: #自定义的通道名，对应代码中的生产监听组
+        destination: park-pay-topic   #相当于rocketmq的topic
+        content-type: text/plain
+        group: park-pay-group    #生产组
+    #          consumer:
+    #            max-attempts: 1   #失败重试
+    rocketmq: #消费者配置
+      binder:
+        name-server: 127.0.0.1:9876
+        enable-msg-trace: true
+      bindings:
+        input: #自定义通道名
+          consumer:
+            orderly: true
+            #delay-level-when-next-consume: 1 # 异步消费消息模式下消费失败重试策略，默认为 0
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/car_message?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
