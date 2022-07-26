@@ -1,0 +1,51 @@
+server:
+  port: 8001
+
+mybatis:
+  type-aliases-package: com.smart.car.carwash.serv.entity
+  mapper-locations: classpath:mapper/*.xml
+
+#logback配置
+logging:
+  level:
+    root: info
+    #关闭nacos心跳日志
+    com.alibaba.nacos.client.*: WARN
+  file:
+    name: ./tmp/carwash.log
+
+spring:
+  #1.微服务的名称(也是Dubbo应用名称)
+  application:
+    name: smartcar-carwash
+  #Spring Boot 2.1以上，配置dubbo需要设定
+  main:
+    allow-bean-definition-overriding: true
+  #db
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/car_carwash?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: ke8ke18zai2
+  #2.nacos注册地址
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        #ip: 192.168.101.112
+
+#dubbo config
+dubbo:
+  # dubbo 服务扫描基准包
+  scan:
+    base-packages: com.smart.car.carwash.serv.impl
+  protocol: #暴露的协议
+    name: dubbo
+    port: -1 #协议端口，-1表示自增端口，从20880开始
+    id: dubbo
+  registry:
+    address: spring-cloud://localhost #表示挂载到SpringCloud注册中心
+  application:  #动态配置
+    qos-enable: false
+  cloud:
+    subscribed-services: smartcar-member # 订阅指定服务

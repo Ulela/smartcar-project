@@ -23,6 +23,17 @@
     </properties>
 
     <dependencies>
+        <!-- Dubbo-API -->
+        <dependency>
+            <groupId>com.smart.car.carwash.api</groupId>
+            <artifactId>smartcar-carwash-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <!-- Dubbo -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-dubbo</artifactId>
+        </dependency>
         <!-- nacos 配置中心 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

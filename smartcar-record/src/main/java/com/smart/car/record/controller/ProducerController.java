@@ -36,4 +36,5 @@ public class ProducerController {
         log.info("发送消息成功..." + message);
         return ResponseResult.ok(message,"消息发送成功！");
     }
+
 }

@@ -2,6 +2,20 @@ server:
   port: 8003
 author:
   nickname: "chenf"
+
+#dubbo config
+dubbo:
+  registry:
+    address: spring-cloud://localhost
+  cloud:
+    subscribed-services: smartcar-carwash #订阅指定服务，逗号分隔
+  application:
+    qos-enable: false
+  #不检测服务提供者是否在线，生产环境建议开启
+  config-center:
+    check: false
+
+
 #mybatis配置
 mybatis:
   type-aliases-package: com.smart.car.member.entity
@@ -10,11 +24,11 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 spring:
+  main:
+    allow-bean-definition-overriding: true
   #1.微服务的名称
   application:
     name: smartcar-member
-  main:
-    allow-bean-definition-overriding: true
   #db连接
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
